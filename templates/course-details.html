@@ -1,0 +1,191 @@
+
+		{% extends 'main.html' %}{% load static %}
+			
+		{% block content %}
+			<!-- start banner Area -->
+			<section class="banner-area relative about-banner" id="home">	
+				<div class="overlay overlay-bg"></div>
+				<div class="container">				
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content col-lg-12">
+							<h1 class="text-white">
+								Popular Courses		
+							</h1>	
+							<p class="text-white link-nav"><a href="{% url 'home' %}">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="{% url 'courses' %}"> Popular Courses</a></p>
+						</div>	
+					</div>
+				</div>
+			</section>
+			<!-- End banner Area -->	
+
+			<!-- Start course-details Area -->
+			<section class="course-details-area pt-120">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 left-contents">
+							<div class="main-image">
+								<img class="img-fluid" src="{{course.image.url}}" alt="">
+							</div>
+							<div class="jq-tab-wrapper" id="horizontalTab">
+	                            <div class="jq-tab-menu">
+	                                <div class="jq-tab-title active" data-tab="1">Objectives</div>
+	                                
+	                                <div class="jq-tab-title" data-tab="3">Course Outline</div>
+	                                <div class="jq-tab-title" data-tab="4">Comments</div>
+	                            </div>
+	                            <div class="jq-tab-content-wrapper">
+	                                <div class="jq-tab-content active" data-tab="1">
+	                                {{course.objective|safe}}    
+									</div>
+	                                
+	                                <div class="jq-tab-content" data-tab="3">
+										{{course.courseoutline.get}}  
+	                                </div>
+	                                <div class="jq-tab-content comment-wrap" data-tab="4">
+						                <div class="comments-area">
+						                    <h4>{{course.comments|length}} Comments</h4>
+						                    <div class="comment-list">
+												{% for comment in course.comments.all %}
+						                        <div class="single-comment justify-content-between d-flex">
+						                            <div class="user justify-content-between d-flex">
+						                                
+						                                <div class="desc">
+						                                    <h5><a href="#">{{comment.user}}t</a></h5>
+						                                    <!-- <p class="date">December 4, 2017 at 3:12 pm </p> -->
+						                                    <p class="comment">
+						                                        {{comment.content|safe}}
+						                                    </p>
+						                                </div>
+						                            </div>
+						                            <div class="reply-btn">
+						                                   <a href="" class="btn-reply text-uppercase">reply</a> 
+						                            </div>
+						                        </div>
+												{% endfor %}
+						                    </div>  
+						                                                                   
+						                </div>
+						                <div class="comment-form">
+						                    <h4>Leave a Comment</h4>
+						                    
+						                        <!-- <div class="form-group form-inline">
+						                          <div class="form-group col-lg-6 col-md-12 name">
+						                            <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+						                          </div>
+						                          <div class="form-group col-lg-6 col-md-12 email">
+						                            <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+						                          </div>                                        
+						                        </div> -->
+						                        <!-- <div class="form-group">
+						                            <input type="text" class="form-control" id="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
+						                        </div> -->
+						                       <form action="" method="POST">{% csrf_token %}
+												<div class="form-group">
+						                            <textarea class="form-control mb-10" rows="5" name="content" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+						                        </div>
+						                        <button type="submit" class="mt-40 text-uppercase genric-btn primary text-center">Post Comment</button> 
+
+
+											   </form>
+												
+						                
+						                </div>     						                
+	                                </div>                              
+	                            </div>
+	                        </div>
+						</div>
+						<div class="col-lg-4 right-contents">
+							<ul>
+								<li>
+									<a class="justify-content-between d-flex" href="#">
+										<p>Trainer’s Name</p> 
+										<span class="or">{{course.trainer}}</span>
+									</a>
+								</li>
+								<li>
+									<a class="justify-content-between d-flex" href="#">
+										<p>Course Fee </p>
+										<span>{{course.course_fee}}</span>
+									</a>
+								</li>
+								<li>
+									<a class="justify-content-between d-flex" href="#">
+										<p>Available Seats </p>
+										<span>15</span>
+									</a>
+								</li>
+								<li>
+									<a class="justify-content-between d-flex" href="#">
+										<p>Schedule </p>
+										<span>2.00 pm to 4.00 pm</span>
+									</a>
+								</li>
+							</ul>
+							<a href="#" class="primary-btn text-uppercase">Enroll the course</a>
+						</div>
+					</div>
+				</div>	
+			</section>
+			<!-- End course-details Area -->
+			
+
+			<!-- Start popular-courses Area --> 
+			<section class="popular-courses-area section-gap courses-page">
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<div class="menu-content pb-70 col-lg-8">
+							<div class="title text-center">
+								<h1 class="mb-10">Popular Courses we offer</h1>
+								<p>There is a moment in the life of any aspiring.</p>
+							</div>
+						</div>
+					</div>						
+					<div class="row">
+						{% for course in courses %}
+						<div class="single-popular-carusel col-lg-3 col-md-6">
+							
+							<div class="thumb-wrap relative">
+								
+								<div class="thumb relative">
+									<div class="overlay overlay-bg"></div>	
+									<img class="img-fluid" src="{{course.image.url}}" alt="">
+								</div>
+								<div class="meta d-flex justify-content-between">
+									<p><span class="lnr lnr-users"></span> 355 <span class="lnr lnr-bubble"></span>{{course.comments|length}}</p>
+									<h4>{{course.course_fee}}</h4>
+								</div>									
+							</div>
+							<div class="details">
+								<a href="#">
+									<h4>
+										{{course.title}}
+								</a>
+								<p>
+									{{course.sub_title}}								
+								</p>
+							</div>
+							
+						</div>	
+												
+						{% endfor %}										
+					</div>
+				</div>	
+			</section>
+			<!-- End popular-courses Area -->					
+
+			<!-- Start cta-two Area -->
+			<section class="cta-two-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 cta-left">
+							<h1>Not Yet Satisfied with our Trend?</h1>
+						</div>
+						<div class="col-lg-4 cta-right">
+							<a class="primary-btn wh" href="#">view our blog</a>
+						</div>
+					</div>
+				</div>	
+			</section>
+			<!-- End cta-two Area -->						    			
+
+			{% endblock %}
